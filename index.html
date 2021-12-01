@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<meta charset=UTF-8>
+<style>
+.node rect {
+    cursor: pointer;
+    fill: #fff;
+    fill-opacity: .5;
+    stroke: #3182bd;
+    stroke-width: 1.5px;
+}
+
+.node text {
+    font: 10px sans-serif;
+    pointer-events: none;
+}
+
+path.link {
+    fill: none;
+    stroke: #9ecae1;
+    stroke-width: 1.5px;
+}
+
+.control.glyphicon {
+    position: static;
+    color: #4A4C4F;
+    font-family: "Oxygen", sans-serif;
+    cursor: pointer;
+}
+
+.scrollbox {
+    height: 120px;
+    border: 1px solid #e5e5e5;
+    overflow: scroll;
+}
+
+.bar {
+    fill: steelblue;
+}
+
+.axis {
+    font: 10px sans-serif;
+}
+
+.axis path, .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.x.axis path {
+    display: none;
+}
+</style>
+<link href="https://fonts.googleapis.com/css?family=Oxygen" rel=stylesheet type="text/css">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel=stylesheet>
+<title>STM Visualization</title>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script>
+    var margin = {
+            top: 30,
+            right: 20,
+            bottom: 30,
+            left: 20
+        },
+        width = window.innerWidth / 1.5 - margin.left - margin.right,
+        height = window.innerHeight - margin.top - margin.bottom,
+        barHeight = 20,
+        barWidth = width * .8;
+    var i = 0,
+        duration = 400,
+        root;
+    var tree = d3.layout.tree().nodeSize([0, 20]);
+    var diagonal = d3.svg.diagonal().projection(function(d) {
+        return [d.y, d.x];
+    });
+    var svg = d3.select("body").append("svg").attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom).append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    root = {
+        "children": [{
+            "name": ["python, machine_learn, data, artificial_intelligence, deep_learn, data_visualization, neural_network"],
+            "children": [{
+                "name": ["chart, python, data_science, data, tool, data_visualization, cyber_security"],
+                "children": [{
+                    "name": ["data_visualization, data_science, python, network, visualization, data, chart"],
+                    "children": [{
+                        "name": ["analysis, feature, social, malware, engineer, software, model"],
+                        "size": [1800],
+                        "topic_no": [28],
+                        "thought_1": ["Market Mix Modelling for an eCommerce firm to estimate the impact of various marketing levers on sales"],
+                        "thought_2": ["Course Repository for University of Cincinnati Malware Analysis Class (CS[567]038)"],
+                        "prob": ["analysis, feature, engineer, model, social, malware, software"],
+                        "frex": ["analysis, feature, social, malware, engineer, software, model"],
+                        "lift": ["malware, social, analysis, feature, set, software, automate"],
+                        "score": ["malware, analysis, engineer, social, feature, software, model"],
+                        "proportion": ["0.02"]
+                    }, {
+                        "name": ["notebook, tutorial, jupyter, data_visualization, data_science, data_analysis, python"],
+                        "children": [{
+                            "name": ["matplotlib, python, numpy, tutorial, panda, python3, visual"],
+                            "size": [1800],
+                            "topic_no": [8],
+                            "thought_1": ["NumPy fundamentals for tensor computation; Matplotlib for data visualization"],
+                            "thought_2": ["Matplotlib is an amazing visualization library in Python for 2D plots of arrays. Matplotlib is a multi-platform data visualization library built on NumPy arrays and designed to work with the broader SciPy stack. It was introduced by John Hunter in the year 2002. One of the greatest benefits of visualization is that it allows us visual access to huge amounts of data in easily digestible visuals. Matplotlib consists of several plots like line, bar, scatter, histogram, etc"],
+                            "prob": ["python, tutorial, matplotlib, python3, panda, numpy, visual"],
+                            "frex": ["matplotlib, python, numpy, tutorial, panda, python3, visual"],
+                            "lift": ["matplotlib, numpy, python, panda, python3, tutorial, visual"],
+                            "score": ["matplotlib, python, panda, python3, numpy, tutorial, visual"],
+                            "proportion": ["0.04"]
+                        }, {
+                            "name": ["notebook, data_science, jupyter, data_analysis, statistic, regression, data_visualization"],
+                            "size": [1800],
+                            "topic_no": [26],
+                            "thought_1": ["Kaggle Kernels (Python, R, Jupyter Notebooks)"],
+                            "thought_2": ["A Portfolio of my Data Science Projects"],
+                            "prob": ["data_science, data_analysis, notebook, data_visualization, jupyter, statistic, regression"],
+                            "frex": ["notebook, data_science, jupyter, data_analysis, statistic, regression, data_visualization"],
+                            "lift": ["jupyter, notebook, statistic, data_science, regression, data_analysis, dataset"],
+                            "score": ["jupyter, data_analysis, data_science, notebook, data_visualization, statistic, regression"],
+                            "proportion": ["0.04"]
+                        }],
+                        "topic_no": [8, 26]
+                    }, {
+                        "name": ["mine, code, data, analytics, repository, package, data_visualization"],
+                        "children": [{
+                            "name": ["code, prediction, ggplot2, package, repository, rstats, material"],
+                            "size": [1800],
+                            "topic_no": [1],
+                            "thought_1": [":lock_with_ink_pen: Opinionated, typographic-centric ggplot2 themes and theme components"],
+                            "thought_2": ["📊📄 ggplot2 theme elements reference sheet"],
+                            "prob": ["code, repository, package, prediction, book, ggplot2, developer"],
+                            "frex": ["code, prediction, ggplot2, package, repository, rstats, material"],
+                            "lift": ["rstats, ggplot2, material, prediction, code, package, repository"],
+                            "score": ["rstats, ggplot2, prediction, code, repository, package, book"],
+                            "proportion": ["0.02"]
+                        }, {
+                            "name": ["data, analytics, sql, visualize, visualisation, mine, data_visualization"],
+                            "size": [1800],
+                            "topic_no": [14],
+                            "thought_1": ["Introduction to Geospatial Raster and Vector Data with R"],
+                            "thought_2": ["Introduction to R for Geospatial Data"],
+                            "prob": ["data, data_visualization, analytics, mine, sql, visualize, database"],
+                            "frex": ["data, analytics, sql, visualize, visualisation, mine, data_visualization"],
+                            "lift": ["visualisation, data, visualize, analytics, sql, analyze, big"],
+                            "score": ["data, visualisation, data_visualization, analytics, visualize, sql, data_analysis"],
+                            "proportion": ["0.06"]
+                        }],
+                        "topic_no": [1, 14]
+                    }, {
+                        "name": ["network, 3d, graph, webgl, knowledge, toolkit, object"],
+                        "size": [1800],
+                        "topic_no": [21],
+                        "thought_1": ["Force-directed graph as a ThreeJS 3d object"],
+                        "thought_2": ["3D force-directed graph component using ThreeJS/WebGL"],
+                        "prob": ["network, graph, 3d, knowledge, webgl, toolkit, object"],
+                        "frex": ["network, 3d, graph, webgl, knowledge, toolkit, object"],
+                        "lift": ["3d, webgl, network, graph, knowledge, toolkit, object"],
+                        "score": ["webgl, 3d, network, graph, knowledge, toolkit, object"],
+                        "proportion": ["0.02"]
+                    }, {
+                        "name": ["map, javascript, extension, create, web, interface, browser"],
+                        "size": [1800],
+                        "topic_no": [25],
+                        "thought_1": ["🌎 A Google Map (https://www.google.com/maps) extension for Apache ECharts (https://github.com/apache/echarts)"],
+                        "thought_2": ["Simple browser extension for managing Polkadot and Substrate network accounts in a browser. Allows the signing of extrinsics using these accounts. Also provides a simple interface for compliant extensions for dapps."],
+                        "prob": ["javascript, web, map, create, simple, design, extension"],
+                        "frex": ["map, javascript, extension, create, web, interface, browser"],
+                        "lift": ["extension, map, interface, browser, create, javascript, web"],
+                        "score": ["extension, javascript, map, web, browser, typescript, create"],
+                        "proportion": ["0.03"]
+                    }, {
+                        "name": ["react, chart, component, data_visualization, library, visualization, plot"],
+                        "children": [{
+                            "name": ["chart, visualization, plot, d3, component, data_visualization, react"],
+                            "size": [1800],
+                            "topic_no": [18],
+                            "thought_1": ["Data Visualization Charting Library"],
+                            "thought_2": [":chart_with_upwards_trend: React chart component library :chart_with_downwards_trend:"],
+                            "prob": ["data_visualization, chart, visualization, react, plot, library, component"],
+                            "frex": ["chart, visualization, plot, d3, component, data_visualization, react"],
+                            "lift": ["chart, dataviz, d3, component, plot, visualization, d3js"],
+                            "score": ["chart, data_visualization, visualization, plot, d3, react, component"],
+                            "proportion": ["0.08"]
+                        }, {
+                            "name": ["dashboard, plotly, apps, include, data_visualization, open-source, compute"],
+                            "size": [1800],
+                            "topic_no": [29],
+                            "thought_1": ["Portfolio of Dash Interactive Dashboards / Mini Apps"],
+                            "thought_2": ["Interactive Dashboards and Data Apps with Plotly and Dash, published by Packt"],
+                            "prob": ["dashboard, plotly, apps, include, data_visualization, open-source, compute"],
+                            "frex": ["dashboard, plotly, apps, include, data_visualization, open-source, compute"],
+                            "lift": ["plotly, dashboard, apps, include, open-source, data_visualization, compute"],
+                            "score": ["plotly, dashboard, apps, include, data_visualization, open-source, compute"],
+                            "proportion": ["0.01"]
+                        }],
+                        "topic_no": [18, 29]
+                    }],
+                    "topic_no": [28, 8, 26, 1, 14, 21, 25, 18, 29]
+                }, {
+                    "name": ["intelligence, business, threat, cyber, team, hack, cyber_security"],
+                    "size": [1800],
+                    "topic_no": [16],
+                    "thought_1": ["ARM 32-bit Raspberry Pi Hacking Hello World example in Kali Linux."],
+                    "thought_2": ["ARM 32-bit Raspberry Pi Char Pointer example in Kali Linux."],
+                    "prob": ["cyber, intelligence, business, threat, team, cyber_security, hack"],
+                    "frex": ["intelligence, business, threat, cyber, team, hack, cyber_security"],
+                    "lift": ["business, threat, intelligence, team, cyber, privacy, engineer"],
+                    "score": ["threat, cyber, intelligence, business, team, hack, cyber_security"],
+                    "proportion": ["0.02"]
+                }, {
+                    "name": ["cybersecurity, project, test, hack, tool, security, cyber_security"],
+                    "children": [{
+                        "name": ["cloud, server, project, website, docker, challenge, file"],
+                        "size": [1800],
+                        "topic_no": [3],
+                        "thought_1": ["B.tech Cryptogaphy Final Year Project on ENCRYPTION & DECRYPTION of IMAGE through Triple DES."],
+                        "thought_2": ["A set of lightweight IoT cloud server boilerplates. The simplest way to build isomorphic JavaScript IoT servers."],
+                        "prob": ["project, docker, cloud, server, file, service, website"],
+                        "frex": ["cloud, server, project, website, docker, challenge, file"],
+                        "lift": ["challenge, server, cloud, website, solution, project, file"],
+                        "score": ["challenge, project, docker, cloud, website, server, file"],
+                        "proportion": ["0.03"]
+                    }, {
+                        "name": ["security, tool, test, cyber_security, penetration, cybersecurity, attack"],
+                        "size": [1800],
+                        "topic_no": [7],
+                        "thought_1": ["Linux keylogger written in C"],
+                        "thought_2": ["These are the scripts & methodologies that can be used in Buffer Over Flow Fuzzing and Exploitation"],
+                        "prob": ["cyber_security, tool, security, cybersecurity, hack, test, script"],
+                        "frex": ["security, tool, test, cyber_security, penetration, cybersecurity, attack"],
+                        "lift": ["security, penetration, test, tool, information, attack, monitor"],
+                        "score": ["penetration, security, cyber_security, hack, cybersecurity, tool, test"],
+                        "proportion": ["0.07"]
+                    }],
+                    "topic_no": [3, 7]
+                }, {
+                    "name": ["compute, programme, optimization, game, algorithm, system, framework"],
+                    "children": [{
+                        "name": ["algorithm, optimization, programme, search, compute, cluster, system"],
+                        "size": [1800],
+                        "topic_no": [10],
+                        "thought_1": ["Genetic Algorithm, Particle Swarm Optimization, Simulated Annealing, Ant Colony Optimization Algorithm,Immune Algorithm, Artificial Fish Swarm Algorithm, Differential Evolution and TSP(Traveling salesman) "],
+                        "thought_2": ["Derivative-Free Optimization Method"],
+                        "prob": ["algorithm, programme, optimization, system, compute, search, cluster"],
+                        "frex": ["algorithm, optimization, programme, search, compute, cluster, system"],
+                        "lift": ["optimization, search, algorithm, cluster, compute, programme, control"],
+                        "score": ["optimization, algorithm, programme, search, compute, cluster, system"],
+                        "proportion": ["0.03"]
+                    }, {
+                        "name": ["game, framework, engine, tree, science, computer, user"],
+                        "size": [1800],
+                        "topic_no": [19],
+                        "thought_1": ["3D Procedural Game Engine Using OpenGL "],
+                        "thought_2": ["Open-source software to play the board game Hive."],
+                        "prob": ["framework, game, computer, engine, tree, science, development"],
+                        "frex": ["game, framework, engine, tree, science, computer, user"],
+                        "lift": ["engine, game, framework, science, tree, user, open-source"],
+                        "score": ["game, framework, engine, computer, tree, science, user"],
+                        "proportion": ["0.02"]
+                    }],
+                    "topic_no": [10, 19]
+                }, {
+                    "name": ["list, platform, time, source, awesome, open, resource"],
+                    "children": [{
+                        "name": ["list, awesome, resource, curate, collection, good, video"],
+                        "size": [1800],
+                        "topic_no": [9],
+                        "thought_1": [":octocat: A Curated List of Awesome Facebook Libra Resources."],
+                        "thought_2": ["A curated list of academic AI resources and people. Partly an aspirational list, partly a memory aide."],
+                        "prob": ["list, awesome, resource, collection, curate, good, video"],
+                        "frex": ["list, awesome, resource, curate, collection, good, video"],
+                        "lift": ["curate, awesome, list, resource, collection, good, video"],
+                        "score": ["curate, awesome, list, resource, collection, good, video"],
+                        "proportion": ["0.02"]
+                    }, {
+                        "name": ["open, source, trade, series, time, finance, platform"],
+                        "size": [1800],
+                        "topic_no": [15],
+                        "thought_1": ["hummingbot中文资源"],
+                        "thought_2": ["Fusion open source community (FOSC) improvement proposals"],
+                        "prob": ["open, source, platform, time, trade, series, finance"],
+                        "frex": ["open, source, trade, series, time, finance, platform"],
+                        "lift": ["finance, open, series, source, trade, time, platform"],
+                        "score": ["trade, open, source, time, finance, series, platform"],
+                        "proportion": ["0.02"]
+                    }],
+                    "topic_no": [9, 15]
+                }],
+                "topic_no": [28, 8, 26, 1, 14, 21, 25, 18, 29, 16, 3, 7, 10, 19, 9, 15]
+            }, {
+                "name": ["pytorch, natural, process, model, artificial_intelligence, language, deep_learn"],
+                "children": [{
+                    "name": ["pytorch, transformer, attention, model, deep_learn, mechanism, implementation"],
+                    "size": [1800],
+                    "topic_no": [4],
+                    "thought_1": ["Implementation of Long-Short Transformer, combining local and global inductive biases for attention over long sequences, in Pytorch"],
+                    "thought_2": ["Implementation of OmniNet, Omnidirectional Representations from Transformers, in Pytorch"],
+                    "prob": ["pytorch, deep_learn, artificial_intelligence, model, implementation, transformer, attention"],
+                    "frex": ["pytorch, transformer, attention, model, deep_learn, mechanism, implementation"],
+                    "lift": ["attention, mechanism, transformer, pytorch, train, model, implementation"],
+                    "score": ["pytorch, mechanism, transformer, attention, deep_learn, implementation, artificial_intelligence"],
+                    "proportion": ["0.04"]
+                }, {
+                    "name": ["natural, nlp, process, text, language, machine, classification"],
+                    "size": [1800],
+                    "topic_no": [20],
+                    "thought_1": ["Tracking the progress in end-to-end speech translation"],
+                    "thought_2": ["Tracking the progress in non-autoregressive generation (translation, transcription, etc.)"],
+                    "prob": ["language, process, natural, nlp, text, machine, classification"],
+                    "frex": ["natural, nlp, process, text, language, machine, classification"],
+                    "lift": ["natural, text, nlp, process, machine, language, generation"],
+                    "score": ["natural, language, process, nlp, text, machine, classification"],
+                    "proportion": ["0.03"]
+                }],
+                "topic_no": [4, 20]
+            }, {
+                "name": ["learn, reinforcement, environment, deep, scikit, train, deep_learn"],
+                "size": [1800],
+                "topic_no": [6],
+                "thought_1": ["Implementation of Inverse Reinforcement Learning Algorithm on a toy car in a 2D world problem, (Apprenticeship Learning via Inverse Reinforcement Learning Abbeel & Ng, 2004)"],
+                "thought_2": ["Learn Deep Reinforcement Learning in 60 days! Lectures & Code in Python. Reinforcement Learning + Deep Learning"],
+                "prob": ["learn, reinforcement, deep, environment, scikit, artificial_intelligence, deep_learn"],
+                "frex": ["learn, reinforcement, environment, deep, scikit, train, deep_learn"],
+                "lift": ["learn, reinforcement, scikit, environment, deep, train, control"],
+                "score": ["reinforcement, learn, deep, scikit, environment, deep_learn, artificial_intelligence"],
+                "proportion": ["0.02"]
+            }, {
+                "name": ["ai, artificial_intelligence, tensorflow, neural_network, deep_learn, machine_learn, image"],
+                "children": [{
+                    "name": ["neural_network, image, tensorflow, keras, convolutional, computer_vision, deep_learn"],
+                    "size": [1800],
+                    "topic_no": [12],
+                    "thought_1": [" Satellite Image Classification using semantic segmentation methods in deep learning"],
+                    "thought_2": ["deeplearning.ai , By Andrew Ng, All video link "],
+                    "prob": ["neural_network, deep_learn, tensorflow, image, detection, computer_vision, recognition"],
+                    "frex": ["neural_network, image, tensorflow, keras, convolutional, computer_vision, deep_learn"],
+                    "lift": ["cnn, convolutional, keras, neural_network, tensorflow, image, artificial"],
+                    "score": ["convolutional, neural_network, deep_learn, tensorflow, image, computer_vision, detection"],
+                    "proportion": ["0.06"]
+                }, {
+                    "name": ["ai, machine_learn, ml, research, artificial_intelligence, paper, datasets"],
+                    "size": [1800],
+                    "topic_no": [27],
+                    "thought_1": ["Top influential pdf research papers in computer science/artificial intelligence/machine learning"],
+                    "thought_2": ["Interpretability and explainability of data and machine learning models"],
+                    "prob": ["machine_learn, artificial_intelligence, ai, research, ml, paper, deep_learn"],
+                    "frex": ["ai, machine_learn, ml, research, artificial_intelligence, paper, datasets"],
+                    "lift": ["ml, ai, research, machine_learn, artificial_intelligence, paper, datasets"],
+                    "score": ["ml, machine_learn, artificial_intelligence, ai, research, deep_learn, paper"],
+                    "proportion": ["0.07"]
+                }],
+                "topic_no": [12, 27]
+            }],
+            "topic_no": [28, 8, 26, 1, 14, 21, 25, 18, 29, 16, 3, 7, 10, 19, 9, 15, 4, 20, 6, 12, 27]
+        }, {
+            "name": ["ethereum, solidity, dapp, web3, smart_contract, contract, token"],
+            "size": [1800],
+            "topic_no": [11],
+            "thought_1": ["A decentralized e-commerce platform! Tech Stack: Ethereum (Solidity) on the backend, Web3 binding to ReactJS frontend!"],
+            "thought_2": ["Ethereum smart contracts that have been used during successful ICOs"],
+            "prob": ["ethereum, blockchain, smart_contract, solidity, dapp, web3, contract"],
+            "frex": ["ethereum, solidity, dapp, web3, smart_contract, contract, token"],
+            "lift": ["contract, token, dapp, ethereum, solidity, web3, smart_contract"],
+            "score": ["solidity, ethereum, smart_contract, blockchain, dapp, contract, token"],
+            "proportion": ["0.05"]
+        }, {
+            "name": ["distribute, hyperledger, application, fabric, ledger, database, system"],
+            "size": [1800],
+            "topic_no": [5],
+            "thought_1": ["Starter Application and Deployment Scripts for Hyperledger Fabric"],
+            "thought_2": ["Short tutorial to build a blockchain application in Go with Hyperledger Fabric"],
+            "prob": ["application, distribute, hyperledger, fabric, ledger, system, database"],
+            "frex": ["distribute, hyperledger, application, fabric, ledger, database, system"],
+            "lift": ["distribute, hyperledger, fabric, ledger, application, database, system"],
+            "score": ["fabric, hyperledger, distribute, ledger, application, database, system"],
+            "proportion": ["0.02"]
+        }, {
+            "name": ["node, base, proof, chain, sdk, nodejs, js"],
+            "size": [1800],
+            "topic_no": [17],
+            "thought_1": ["Track your farming and pool performance on the Binance Smart Chain, Polygon, Fantom, KuCoin Community Chain, Harmony, Celo - https://farm.army - nodejs backend"],
+            "thought_2": ["Solana JavaScript SDK"],
+            "prob": ["base, node, sdk, nodejs, proof, chain, js"],
+            "frex": ["node, base, proof, chain, sdk, nodejs, js"],
+            "lift": ["chain, proof, node, sdk, base, nodejs, js"],
+            "score": ["chain, node, sdk, proof, base, nodejs, js"],
+            "proportion": ["0.02"]
+        }, {
+            "name": ["blockchain, rust, protocol, decentralize, wallet, cryptocurrency, bitcoin"],
+            "children": [{
+                "name": ["bitcoin, cryptocurrency, wallet, blockchain, decentralize, crypto, technology"],
+                "size": [1800],
+                "topic_no": [13],
+                "thought_1": ["Blockchain as intended"],
+                "thought_2": ["Bitpay Wallet (formerly Copay) is a secure Bitcoin and other crypto currencies wallet platform for both desktop and mobile devices."],
+                "prob": ["blockchain, bitcoin, cryptocurrency, decentralize, wallet, crypto, technology"],
+                "frex": ["bitcoin, cryptocurrency, wallet, blockchain, decentralize, crypto, technology"],
+                "lift": ["bitcoin, wallet, cryptocurrency, crypto, decentralize, technology, blockchain"],
+                "score": ["wallet, blockchain, bitcoin, cryptocurrency, decentralize, crypto, technology"],
+                "proportion": ["0.08"]
+            }, {
+                "name": ["rust, protocol, golang, client, cryptography, p2p, implementation"],
+                "size": [1800],
+                "topic_no": [22],
+                "thought_1": ["⚡ Elrond-GO: The official implementation of the Elrond protocol, written in golang."],
+                "thought_2": ["The Rust implementation of Conflux protocol."],
+                "prob": ["protocol, rust, implementation, golang, p2p, client, cryptography"],
+                "frex": ["rust, protocol, golang, client, cryptography, p2p, implementation"],
+                "lift": ["rust, golang, protocol, cryptography, client, official, consensus"],
+                "score": ["rust, protocol, cryptography, implementation, p2p, golang, client"],
+                "proportion": ["0.03"]
+            }],
+            "topic_no": [13, 22]
+        }, {
+            "name": ["android, ios, swift, ui, app, library, demo"],
+            "size": [1800],
+            "topic_no": [23],
+            "thought_1": ["An Android data-driven, percentage-based UI Card Gallery Library"],
+            "thought_2": ["Blockked - blockchain.info companion (and educational) app for Android "],
+            "prob": ["library, android, app, ios, ui, swift, demo"],
+            "frex": ["android, ios, swift, ui, app, library, demo"],
+            "lift": ["android, swift, ios, ui, demo, app, line"],
+            "score": ["android, ios, app, ui, swift, library, demo"],
+            "proportion": ["0.02"]
+        }, {
+            "name": ["java, hacktoberfest, build, api, support, bot, make"],
+            "children": [{
+                "name": ["make, easy, explorer, build, support, fast, program"],
+                "size": [1800],
+                "topic_no": [2],
+                "thought_1": ["A blazingly fast, local, Ethereum block explorer built on top of Erigon"],
+                "thought_2": ["Polkadot Substrate Explorer Subscan"],
+                "prob": ["build, make, support, easy, fast, explorer, transaction"],
+                "frex": ["make, easy, explorer, build, support, fast, program"],
+                "lift": ["explorer, easy, make, program, support, fast, build"],
+                "score": ["explorer, build, program, transaction, make, easy, fast"],
+                "proportion": ["0.02"]
+            }, {
+                "name": ["api, java, bot, hacktoberfest, free, script, design"],
+                "size": [1800],
+                "topic_no": [24],
+                "thought_1": ["ZZZKBot is a bot (AI) for Starcraft: Broodwar. It is designed to compete against other bots. It is not designed to compete against humans. It uses BWAPI as an API for interacting with Starcraft: Broodwar. I am not intending to support/maintain/develop ZZZKBot in future, although I haven't ruled it out either."],
+                "thought_2": ["ExchangeSharp is a powerful, fast and easy to use .NET/C# API for interfacing with many crypto currency exchanges. REST and web sockets are supported."],
+                "prob": ["api, java, hacktoberfest, bot, free, script, design"],
+                "frex": ["api, java, bot, hacktoberfest, free, script, design"],
+                "lift": ["java, api, bot, hacktoberfest, free, script, design"],
+                "score": ["bot, api, java, hacktoberfest, free, script, design"],
+                "proportion": ["0.02"]
+            }],
+            "topic_no": [2, 24]
+        }],
+        "topic_no": [28, 8, 26, 1, 14, 21, 25, 18, 29, 16, 3, 7, 10, 19, 9, 15, 4, 20, 6, 12, 27, 11, 5, 17, 13, 22, 23, 2, 24],
+        "name": ["Github Thematic Clusters"],
+        "this_root": [true],
+        "summary": ["A topic model with 29 topics, 3290 documents and a 238 word dictionary."],
+        "proportions": [0.0227, 0.0184, 0.0266, 0.0354, 0.0225, 0.0221, 0.0686, 0.0367, 0.0211, 0.0273, 0.0503, 0.0619, 0.0832, 0.0597, 0.0193, 0.0153, 0.0192, 0.0773, 0.0249, 0.0259, 0.0229, 0.0333, 0.0188, 0.0164, 0.0343, 0.036, 0.0697, 0.022, 0.0084]
+    }
+
+    root.x0 = 0;
+    root.y0 = 0;
+    update(root);
+    function update(source) {
+        var nodes = tree.nodes(root);
+        var height = Math.max(500, nodes.length * barHeight + margin.top + margin.bottom);
+        d3.select("svg").transition().duration(duration).attr("height", height);
+        d3.select(self.frameElement).transition().duration(duration).style("height", height + "px");
+        nodes.forEach(function(n, i) {
+            n.x = i * barHeight;
+        });
+        var node = svg.selectAll("g.node").data(nodes, function(d) {
+            return d.id || (d.id = ++i);
+        });
+        var nodeEnter = node.enter().append("g").attr("class", function(d) {
+            if (d.size) {
+                return "node leaf"
+            } else {
+                return "node noleaf"
+            }
+        }).attr("transform", function(d) {
+            return "translate(" + source.y0 + "," + source.x0 + ")";
+        }).style("opacity", 1e-6);
+        nodeEnter.append("rect").data(nodes).attr("y", -barHeight / 2).attr("height", barHeight).attr("width", barWidth).style("fill", color).on("click", clickModal);
+        nodeEnter.append("text").attr("dy", 3.5).attr("dx", 5.5).text(function(d) {
+            if (d.children) {
+                return d.name;
+            } else {
+                return d.topic_no + ": " + d.name;
+            }
+        });
+        d3.selectAll("g.noleaf").append("svg:foreignObject").attr("width", 20).attr("height", 20).attr("y", "-10px").attr("x", barWidth - 15).append("xhtml:span").attr("class", "control glyphicon glyphicon-minus").attr("width", "30").on("click", function(d) {
+            click(d);
+        });
+        nodeEnter.transition().duration(duration).attr("transform", function(d) {
+            return "translate(" + d.y + "," + d.x + ")";
+        }).style("opacity", 1);
+        node.transition().duration(duration).attr("transform", function(d) {
+            return "translate(" + d.y + "," + d.x + ")";
+        }).style("opacity", 1).select("rect").style("fill", color);
+        node.exit().transition().duration(duration).attr("transform", function(d) {
+            return "translate(" + source.y + "," + source.x + ")";
+        }).style("opacity", 1e-6).remove();
+        var link = svg.selectAll("path.link").data(tree.links(nodes), function(d) {
+            return d.target.id;
+        });
+        link.enter().insert("path", "g").attr("class", "link").attr("d", function(d) {
+            var o = {
+                x: source.x0,
+                y: source.y0
+            };
+            return diagonal({
+                source: o,
+                target: o
+            });
+        }).transition().duration(duration).attr("d", diagonal);
+        link.transition().duration(duration).attr("d", diagonal);
+        link.exit().transition().duration(duration).attr("d", function(d) {
+            var o = {
+                x: source.x,
+                y: source.y
+            };
+            return diagonal({
+                source: o,
+                target: o
+            });
+        }).remove();
+        nodes.forEach(function(d) {
+            d.x0 = d.x;
+            d.y0 = d.y;
+        });
+    }
+    function click(d) {
+        if (d.children) {
+            d._children = d.children;
+            d.children = null;
+        } else {
+            d.children = d._children;
+            d._children = null;
+        }
+        update(d);
+    }
+    function color(d) {
+        return d._children ? "#3182bd" : d.children ? "#c6dbef" : "#fd8d3c";
+    }
+    function clickModal(d) {
+        if (d.size) {
+            $("#doc1").text(d.thought_1);
+            $("#doc2").text(d.thought_2);
+            $("#high-prob").text("Highest Probability: " + d.prob);
+            $("#topicModalLabel").text("Topic " + d.topic_no + " Information");
+            $("#frex").text("FREX: " + d.frex);
+            $("#lift").text("Lift: " + d.lift);
+            $("#score").text("Score: " + d.score);
+            $("#proportion").text("" + d.proportion);
+            $("#modelBody").hide();
+            $("#clusterBody").hide();
+            $("#topicBody").show();
+            $("#topicModal").modal("show");
+        } else if (d.this_root) {
+            $("#topicModalLabel").text("Fitted Model Information");
+            $("#mod1-text").text(d.summary);
+            $("#topicBody").hide();
+            $("#clusterBody").hide();
+            $("#modelBody").show();
+            $("#topicModal").modal("show");
+            if ($("#barchartDiv").children().length == 2) {
+                proportionChart();
+            }
+        } else {
+            $("#topicModalLabel").text("Cluster Information");
+            $("#clust1-text").text("This cluster comprises topics " + d.topic_no.join(", ") + ".");
+            $("#topicBody").hide();
+            $("#modelBody").hide();
+            $("#clusterBody").show();
+            $("#topicModal").modal("show");
+        }
+    }
+    function proportionChart() {
+        for (var t = window.innerHeight / 3.5, a = window.innerWidth / 2.5, r = 35, e = 35, n = root.proportions.length, o = [.5]; o.length < n;)
+            o.push(o[o.length] + 1);
+        var i = d3.select("#barchartDiv").append("svg").attr({
+                width: a,
+                height: t,
+                style: "display: block; margin: auto;"
+            }),
+            l = d3.scale.linear().domain([0, d3.max(root.proportions)]).range([0, t - r]),
+            s = d3.scale.linear().domain([0, n]).range([0, a - e]),
+            d = d3.scale.linear().domain([0, d3.max(root.proportions)]).range([t - r, 0]),
+            p = d3.svg.axis().scale(d).orient("left"),
+            c = d3.svg.axis().scale(s).orient("bottom").tickValues(d3.range(.5, n + .5, 1));
+        i.selectAll("rect").data(root.proportions).enter().append("rect").attr({
+            x: function(t, r) {
+                return r * (a - e) / n + e
+            },
+            y: function(a) {
+                return t - l(a) - r
+            },
+            width: (a - e) / n - 1,
+            height: l,
+            fill: "orange"
+        }),
+        i.append("g").attr({
+            "class": "axis",
+            transform: "translate(" + e + "," + (t - r) + ")"
+        }).call(c),
+        i.append("g").attr({
+            "class": "axis",
+            transform: "translate(" + e + ")"
+        }).call(p),
+        i.append("text").attr("class", "x label").attr("text-anchor", "middle").attr("x", a / 2).attr("y", t - 6).text("Topic")
+    }
+    </script>
+    <div class="modal fade" id="topicModal" tabindex="-1" role="dialog" aria-labelledby="topicModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="topicModalLabel">Topic Information</h4>
+                </div>
+                <div class="modal-body" id="topicBody">
+                    <h5>Top Words</h5>
+                    <ul id="word-list">
+                        <li id="high-prob">Highest Probability: </li>
+                        <li id="frex">FREX: </li>
+                        <li id="lift">Lift: </li>
+                        <li id="score">Score: </li>
+                    </ul>
+                    <hr>
+                    <h5>Representative Documents</h5>
+                    <div id="doc1" class="modal-body scrollbox"></div>
+                    <br>
+                    <div id="doc2" class="modal-body scrollbox"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+                <div class="modal-body" id="modelBody">
+                    <h5>Summary</h5>
+                    <span id="mod1-text"></span>
+                    <hr>
+                    <div id="barchartDiv">
+                        <h5>Topic Proportions in Corpus</h5>
+                        <br>
+                    </div>
+                    <br>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+                <div class="modal-body" id="clusterBody">
+                    <h5>Summary</h5>
+                    <span id="clust1-text"></span>
+                    <br>
+                    <br>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+
